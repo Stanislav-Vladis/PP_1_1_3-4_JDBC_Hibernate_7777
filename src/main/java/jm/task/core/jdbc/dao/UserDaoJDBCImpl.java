@@ -3,10 +3,7 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +50,11 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
 
         try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT Users(Name, LastName, Age) VALUES ('" + name + "', '" + lastName + "', " + age + ");");
+            PreparedStatement statement = connection.prepareStatement("INSERT Users(Name, LastName, Age) VALUES (?, ?, ?);");
+            statement.setString(1, name);
+            statement.setString(2, lastName);
+            statement.setByte(3, age);
+            statement.executeUpdate();
             System.out.println("User с именем – '" + name + "' добавлен в базу данных");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,8 +66,9 @@ public class UserDaoJDBCImpl implements UserDao {
     public void removeUserById(long id) {
 
         try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM Users WHERE Id = " + id + ";");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM Users WHERE Id = ?;");
+            statement.setByte(1, (byte) id);
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
