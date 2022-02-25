@@ -9,18 +9,25 @@ import java.util.List;
 
 //Данный класс реализует все функции необходимые для извлечения, обновления и удаления объектов User
 public class UserDaoJDBCImpl implements UserDao {
-    private Connection connection;
+    private static Connection connection;
 
     public UserDaoJDBCImpl() {
-
         try {
             connection = Util.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
+    public static void close() {
+
+        try {
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     public void createUsersTable() {
