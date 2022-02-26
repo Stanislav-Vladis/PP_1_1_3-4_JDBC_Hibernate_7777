@@ -1,5 +1,10 @@
 package jm.task.core.jdbc.util;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -12,6 +17,29 @@ import java.util.Properties;
 
 public class Util {
     // реализуйте настройку соеденения с БД
+    //Настройка и работа с сессиями
+    private  static SessionFactory sessionFactory;
+
+    static {
+
+        //Получаем реестр сервисов, настраиваем конфигурацию из hibernate.cfg.xml и билдим.
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        try {
+            //MetadataSources - нужен для работы с метаданными маппинга объектов
+            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        } catch (Exception e) {
+            //При возникновении ощибок разрущаем реестр
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+
+
 
     public static Connection getConnection() throws SQLException {
 

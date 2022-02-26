@@ -13,20 +13,21 @@ public class Main {
         // реализуйте алгоритм здесь
 
         //1. Создание таблицы User(ов)
-        userService.createUsersTable();
+        //userService.createUsersTable();
         //2. Добавление 4 User(ов) в таблицу с данными на свой выбор.
-        userService.saveUser("Коля", "Петров", (byte) 25);
-        userService.saveUser("Вася", "Иванов", (byte) 27);
-        userService.saveUser("Дима", "Маслеников", (byte) 18);
-        userService.saveUser("Саша", "Владимирович", (byte) 20);
+        //userService.saveUser("Коля", "Петров", (byte) 25);
+        //userService.saveUser("Вася", "Иванов", (byte) 27);
+        //userService.saveUser("Дима", "Маслеников", (byte) 18);
+        //userService.saveUser("Саша", "Владимирович", (byte) 20);
         //3. Получение всех User из базы и вывод в консоль
-        userService.getAllUsers().stream().forEach(System.out::println);
+        //userService.getAllUsers().stream().forEach(System.out::println);
         //4. Очистка таблицы User(ов)
-        userService.cleanUsersTable();
+        //userService.cleanUsersTable();
         //5. Удаление таблицы
-        userService.dropUsersTable();
+        //userService.dropUsersTable();
         //Закрываем подключение к БД
-        UserDaoJDBCImpl.close();
+        //UserDaoJDBCImpl.close();
+
     }
 
 }
