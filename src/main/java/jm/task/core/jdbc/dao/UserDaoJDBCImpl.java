@@ -12,11 +12,16 @@ public class UserDaoJDBCImpl implements UserDao {
     private static Connection connection;
 
     public UserDaoJDBCImpl() {
+    }
+
+    static {
+
         try {
             connection = Util.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public static void close() {
@@ -28,6 +33,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
 
     }
+
 
     @Override
     public void createUsersTable() {
