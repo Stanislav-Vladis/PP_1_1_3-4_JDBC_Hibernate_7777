@@ -1,9 +1,11 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +24,26 @@ public class Util {
 
     static {
 
+        try {
+            //Задаем конфигурацию
+            Configuration configuration = new Configuration()
+                    .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver")
+                    .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect")
+                    .setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/kata_preproject_bd?useSSL=false&amp;serverTimezone=UTC")
+                    .setProperty("hibernate.connection.username", "root IDEA")
+                    .setProperty("hibernate.connection.password", "password")
+                    .setProperty("hibernate.show_sql", "false")
+                    .setProperty("hibernate.format_sql", "true")
+                    .setProperty("hibernate.current_session_context_class", "thread")
+                    .addAnnotatedClass(User.class);
+
+            sessionFactory = configuration.configure().buildSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        /*
         //Получаем реестр сервисов, настраиваем конфигурацию из hibernate.cfg.xml и билдим.
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         try {
@@ -31,6 +53,7 @@ public class Util {
             //При возникновении ощибок разрущаем реестр
             StandardServiceRegistryBuilder.destroy(registry);
         }
+        */
 
     }
 
